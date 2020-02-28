@@ -3,13 +3,26 @@ package com.model;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
+import java.util.ArrayList;
+
+import com.persistence.CarsDAO;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import mockit.Expectations;
+import mockit.MockUp;
+import mockit.Mocked;
+import mockit.Mock;
+import mockit.integration.junit4.JMockit;
 
 /**
  * unit test class for Cars
  */
+
+@RunWith(JMockit.class)
 public class CarsTest {
 
     Cars c;
@@ -52,6 +65,25 @@ public class CarsTest {
         c.setPrice(350000);
 
         assertEquals("i10", c.getCarName());
+
+    }
+
+    @Test
+    public void testListAllEmpty(@Mocked final CarsDAO dao) {
+        new Expectations() {
+            {
+                dao.listAll();
+                result = new ArrayList<Cars>();
+            }
+        };
+        new MockUp<Cars>() {
+            @Mock
+            CarsDAO dao() {
+                return dao;
+            }
+        };
+        Cars[] es = Cars.listAll();
+        assertEquals(0, es.length);
 
     }
 }
