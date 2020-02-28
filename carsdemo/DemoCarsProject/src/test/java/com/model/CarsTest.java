@@ -49,6 +49,29 @@ public class CarsTest {
         // assertNotEquals("Skoda", newcar.getCarName());
     }
 
+    @Test
+    public void testEquals() {
+        Cars c = new Cars("Maruthi", 500000);
+        Cars c1 = new Cars("Cli220 Benz", 4000000);
+        Cars c2 = new Cars("Audi R8", 30000000);
+        Cars c3 = new Cars("Chiron", 210000000);
+
+        assertEquals(c, c1);
+        assertNotEquals(c2, c3);
+        assertNotEquals(c1, c3);
+    }
+
+    @Test
+    public void testHashcode() {
+        Cars c = new Cars("Maruthi", 500000);
+        Cars c1 = new Cars("Maruthi", 500000);
+        Cars c2 = new Cars("Audi R8", 30000000);
+
+        assertEquals(c.hashCode(), c1.hashCode());
+        assertNotEquals(c1.hashCode(), c2.hashCode());
+
+    }
+
     /**
      * test for parameterized constructor
      */
