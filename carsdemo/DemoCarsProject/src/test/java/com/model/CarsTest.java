@@ -86,4 +86,30 @@ public class CarsTest {
         assertEquals(0, es.length);
 
     }
+
+    @Test
+    public void testListAllSome(@Mocked final CarsDAO dao) {
+        new Expectations() {
+            {
+                // declaring an arraylist
+                ArrayList<Cars> es = new ArrayList<Cars>();
+                es.add(new Cars("Datsun", 1200000));
+                es.add(new Cars("Tata Nano", 200000));
+                es.add(new Cars("Rolls Royce", 70000000));
+                dao.listAll();
+                result = es;
+            }
+        };
+        new MockUp<Cars>() {
+            @Mock
+            CarsDAO dao() {
+                return dao;
+            }
+        };
+
+        Cars[] es = Cars.listAll();
+        assertEquals(3, es.length);
+        assertEquals(new Cars("Datsun", 1200000), es[0]);
+
+    }
 }
