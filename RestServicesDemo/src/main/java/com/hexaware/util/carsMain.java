@@ -69,7 +69,10 @@ public class carsMain {
         System.out.println("Enter the new price: ");
         double price = sc.nextDouble();
 
-        int result = Cars.updateCar(price, id);
+        Cars car = new Cars();
+        car.setId(id);
+        car.setPrice(price);
+        int result = Cars.updateCar(car);
         if (result > 0) {
             System.out.println("Update successful");
         } else {
