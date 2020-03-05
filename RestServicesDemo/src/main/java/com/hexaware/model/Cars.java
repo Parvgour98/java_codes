@@ -9,6 +9,7 @@ import com.hexaware.persistence.DBConnection;
 public class Cars {
     private String carName;
     private double price;
+    private int id;
 
     // default constructor
     public Cars() {
@@ -16,6 +17,13 @@ public class Cars {
 
     // parameterized constructor
     public Cars(String carName, double price) {
+        this.carName = carName;
+        this.price = price;
+    }
+
+    //parameterized constructor with all fields
+    public Cars(int id, String carName, double price){
+        this.id = id;
         this.carName = carName;
         this.price = price;
     }
@@ -38,6 +46,13 @@ public class Cars {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public void setId(int id){
+        this.id = id;
+    }
+    public int getId(){
+        return id;
     }
 
     @Override
@@ -100,8 +115,8 @@ public class Cars {
         return dao().find(id);
     }
 
-    public static int updateCar(double price, int id) {
-        final int result = dao().updateCar(price, id);
+    public static int updateCar(Cars car) {
+        final int result = dao().updateCar(car.getPrice(), car.getId());
         return result;
     }
 }
