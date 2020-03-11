@@ -12,14 +12,17 @@ import org.skife.jdbi.v2.sqlobject.customizers.Mapper;
 public interface CarsDAO {
 
     @SqlUpdate("Insert into Cars (name,price) values(:name, :price")
-    public void insertCar(@Bind("name") String carName, @Bind("price") double price);
+    public int insertCar(@Bind("name") String carName, @Bind("price") double price);
 
     @SqlQuery("Select * from Cars")
     @Mapper(CarsMapper.class)
     public List<Cars> listAll();
 
-    @SqlQuery("Select * from Cars where name = :name")
+    @SqlQuery("Select * from Cars where id = :id")
     @Mapper(CarsMapper.class)
-    Cars find(@Bind("name") String carName);
+    Cars find(@Bind("id") int id);
+
+    @SqlUpdate("update Cars set price = :price where id = :id")
+    int updateCar(@Bind("price") double price, @Bind("id") int id);
 
 }

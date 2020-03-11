@@ -9,13 +9,15 @@ import com.hexaware.persistence.DBConnection;
 public class Cars {
     private String carName;
     private double price;
+    private int id;
 
     // default constructor
     public Cars() {
     }
 
     // parameterized constructor
-    public Cars(String carName, double price) {
+    public Cars(int id, String carName, double price) {
+        this.id = id;
         this.carName = carName;
         this.price = price;
     }
@@ -40,9 +42,17 @@ public class Cars {
         this.price = price;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
+
     @Override
     public String toString() {
-        return carName + " " + price;
+        return id + " " + carName + " " + price;
     }
 
     @Override
@@ -53,7 +63,7 @@ public class Cars {
             return false;
         }
         Cars car = (Cars) obj;
-        if (Objects.equals(carName, car.carName) && Objects.equals(price, car.price)) {
+        if (Objects.equals(id, car.id) && Objects.equals(carName, car.carName) && Objects.equals(price, car.price)) {
             return true;
         }
         return false;
@@ -85,17 +95,23 @@ public class Cars {
      * @param carname
      * @param price
      */
-    public static void insertCar(String carname, double price) {
-        dao().insertCar(carname, price);
+    public static int insertCar(String carname, double price) {
+        final int result = dao().insertCar(carname, price);
+        return result;
     }
 
     /**
      * list car details by carname
      * 
-     * @param carName
-     * @return Cars
+     * @param id
+     * @return Cars object
      */
-    public static Cars find(String carName) {
-        return dao().find(carName);
+    public static Cars find(int id) {
+        return dao().find(id);
+    }
+
+    public static int updateCar(Cars car) {
+        final int result = dao().updateCar(car.getPrice(), car.getId());
+        return result;
     }
 }
